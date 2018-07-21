@@ -23,17 +23,20 @@
 using System;
 
 using EventFlow.Extensions;
+using EventFlow.PostgreSql.ReadStores.Attributes;
 
 namespace EventFlow.PostgreSql.ReadStores
 {
     public abstract class PostgreSqlReadModel : IPostgreSqlReadModel
     {
+		[PostgreSqlReadModelIdentityColumn]
         public string AggregateId { get; set; }
         public DateTimeOffset CreateTime { get; set; }
         public DateTimeOffset UpdatedTime { get; set; }
+		[PostgreSqlReadModelVersionColumn]
         public int LastAggregateSequenceNumber { get; set; }
 
-        public override string ToString()
+		public override string ToString()
         {
             return string.Format(
                 "Read model '{0}' for '{1} v{2}'",
