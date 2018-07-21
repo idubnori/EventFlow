@@ -42,8 +42,8 @@ namespace EventFlow.PostgreSql.TestsHelpers
         {
             if (DropOnDispose)
             {
-                var masterConnectionString = ConnectionString.NewConnectionString("postgres");
-                masterConnectionString.Execute($"DROP DATABASE \"{ConnectionString.Database}\";");
+                //var masterConnectionString = ConnectionString.NewConnectionString("postgres");
+                //masterConnectionString.Execute($"DROP DATABASE \"{ConnectionString.Database}\";");
             }
         }
 
