@@ -57,7 +57,6 @@ namespace EventFlow.PostgreSql.TestsHelpers
             environmentServer = "localhost";
             environmentPort = "5432";
             envrionmentUsername = "postgres";
-	        environmentPassword = "Password12!";
 
 			connectionstringParts.Add(string.IsNullOrEmpty(environmentServer)
                 ? @"Server=localhost"
