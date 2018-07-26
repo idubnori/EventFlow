@@ -2,24 +2,22 @@
 using EventFlow.EntityFramework.Tests.Model;
 using EventFlow.PostgreSql.Connections;
 using Microsoft.EntityFrameworkCore;
-using Npgsql;
 
 namespace EventFlow.EntityFramework.Tests.PostgreSql
 {
     public class PostgreSqlDbContextProvider : IDbContextProvider<TestDbContext>, IDisposable
     {
-        private readonly NpgsqlConnection _connection;
+        private readonly string _connectionString;
 
         public PostgreSqlDbContextProvider(IPostgreSqlConfiguration postgreSqlConfiguration)
         {
-            _connection = new NpgsqlConnection(postgreSqlConfiguration.ConnectionString);
-            _connection.Open();
+            _connectionString = postgreSqlConfiguration.ConnectionString;
         }
 
         public TestDbContext CreateContext()
         {
             var options = new DbContextOptionsBuilder<TestDbContext>()
-                .UseNpgsql(_connection)
+                .UseNpgsql(_connectionString)
                 .Options;
             var context = new TestDbContext(options);
             context.Database.EnsureCreated();
@@ -28,7 +26,6 @@ namespace EventFlow.EntityFramework.Tests.PostgreSql
 
         public void Dispose()
         {
-            _connection.Close();
         }
     }
 }
