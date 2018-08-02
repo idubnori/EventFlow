@@ -1,5 +1,6 @@
 ﻿using System;
 using EventFlow.Configuration;
+using LinqToDB.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace EventFlow.EntityFramework
@@ -13,6 +14,8 @@ namespace EventFlow.EntityFramework
 
         private EntityFrameworkConfiguration()
         {
+            LinqToDBForEFTools.Initialize();
+
             UseUniqueConstraintDetectionStrategy(exception =>
                 exception.InnerException?.Message?.IndexOf("unique", StringComparison.OrdinalIgnoreCase) >= 0);
         }
