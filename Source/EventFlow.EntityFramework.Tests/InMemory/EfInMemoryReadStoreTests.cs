@@ -8,6 +8,7 @@ using NUnit.Framework;
 
 namespace EventFlow.EntityFramework.Tests.InMemory
 {
+    [Ignore("Ignore to not support linq2db.EntityFrameworkCore, as temporal.")]
     [Category(Categories.Integration)]
     public class EfInMemoryReadStoreTests : TestSuiteForReadModelStore
     {
