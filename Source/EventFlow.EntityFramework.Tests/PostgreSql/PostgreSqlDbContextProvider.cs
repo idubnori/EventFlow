@@ -6,19 +6,18 @@ namespace EventFlow.EntityFramework.Tests.PostgreSql
 {
     public class PostgreSqlDbContextProvider : IDbContextProvider<TestDbContext>, IDisposable
     {
-        private readonly string _connectionString;
+        private readonly DbContextOptions<TestDbContext> _options;
 
-        public PostgreSqlDbContextProvider(IEntityFrameworkConfiguration entityFrameworkConfiguration)
+        public PostgreSqlDbContextProvider(IEntityFrameworkConfiguration configuration)
         {
-            _connectionString = entityFrameworkConfiguration.ConnectionString;
+            _options = new DbContextOptionsBuilder<TestDbContext>()
+                .UseNpgsql(configuration.ConnectionString)
+                .Options;
         }
 
         public TestDbContext CreateContext()
         {
-            var options = new DbContextOptionsBuilder<TestDbContext>()
-                .UseNpgsql(_connectionString)
-                .Options;
-            var context = new TestDbContext(options);
+            var context = new TestDbContext(_options);
             context.Database.EnsureCreated();
             return context;
         }
