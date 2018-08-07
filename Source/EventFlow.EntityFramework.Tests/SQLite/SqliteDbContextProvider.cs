@@ -7,16 +7,17 @@ namespace EventFlow.EntityFramework.Tests.SQLite
 {
     public class SqliteDbContextProvider : IDbContextProvider<TestDbContext>, IDisposable
     {
+        private readonly SqliteConnection _connection;
         private readonly DbContextOptions<TestDbContext> _options;
-
-        public SqliteDbContextProvider()
+        
+        public SqliteDbContextProvider(IEntityFrameworkConfiguration configuration)
         {
             // In-memory database only exists while the connection is open
-            var connection = new SqliteConnection("DataSource=:memory:");
-            connection.Open();
+            _connection = new SqliteConnection(configuration.ConnectionString);
+            _connection.Open();
 
             _options = new DbContextOptionsBuilder<TestDbContext>()
-                .UseSqlite(connection)
+                .UseSqlite(_connection)
                 .Options;
         }
 
@@ -29,6 +30,7 @@ namespace EventFlow.EntityFramework.Tests.SQLite
 
         public void Dispose()
         {
+            _connection.Dispose();
         }
     }
 }

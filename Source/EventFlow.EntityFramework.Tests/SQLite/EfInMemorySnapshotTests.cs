@@ -9,10 +9,17 @@ namespace EventFlow.EntityFramework.Tests.SQLite
     [Category(Categories.Integration)]
     public class EfSqliteSnapshotTests : TestSuiteForSnapshotStore
     {
+        private readonly EntityFrameworkConfiguration _configuration;
+
+        public EfSqliteSnapshotTests()
+        {
+            _configuration = EntityFrameworkConfiguration.New.SetConnectionString("DataSource=:memory:");
+        }
+
         protected override IRootResolver CreateRootResolver(IEventFlowOptions eventFlowOptions)
         {
             return eventFlowOptions
-                .ConfigureEntityFramework()
+                .ConfigureEntityFramework(_configuration)
                 .ConfigureForSnapshotStoreTest<SqliteDbContextProvider>()
                 .CreateResolver();
         }
