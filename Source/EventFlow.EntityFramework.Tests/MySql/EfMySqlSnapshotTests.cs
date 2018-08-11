@@ -38,7 +38,7 @@ namespace EventFlow.EntityFramework.Tests.MySql
 
         protected override IRootResolver CreateRootResolver(IEventFlowOptions eventFlowOptions)
         {
-            _testDatabase = MySqlHelpz.CreateDatabase("eventflow-snapshots");
+            _testDatabase = MySqlHelpz.CreateDatabase("eventflow-ss");
 
             return eventFlowOptions
                 .ConfigureEntityFramework(EntityFrameworkConfiguration.New.SetConnectionString(_testDatabase.ConnectionString.Value))

@@ -34,7 +34,7 @@ namespace EventFlow.EntityFramework.Tests.MySql
         public MySqlDbContextProvider(IEntityFrameworkConfiguration configuration)
         {
             _options = new DbContextOptionsBuilder<TestDbContext>()
-                .UseMySQL(configuration.ConnectionString)
+                .UseMySql(configuration.ConnectionString)
                 .Options;
         }
 

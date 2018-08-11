@@ -31,9 +31,9 @@ namespace EventFlow.MySql.Tests.TestHelpers
 		public static IMySqlDatabase CreateDatabase(string label, bool dropOnDispose = true)
 		{
 			var connectionString = CreateConnectionString(label);
-			var masterConnectionString = connectionString.NewConnectionString("root");
+			var masterConnectionString = connectionString.NewConnectionString("mysql");
 
-			var sql = $"CREATE DATABASE \"{connectionString.Database}\";";
+			var sql = $"CREATE DATABASE `{connectionString.Database}`;";
 			masterConnectionString.Execute(sql);
 
 			return new MySqlDatabase(connectionString, dropOnDispose);
@@ -62,15 +62,15 @@ namespace EventFlow.MySql.Tests.TestHelpers
 				? @"Server=localhost"
 				: $"Server={environmentServer}");
 			connectionstringParts.Add(string.IsNullOrEmpty(envrionmentUsername)
-				? @"User Id=root"
-				: $"User Id={envrionmentUsername}");
+				? @"Uid=root"
+				: $"Uid={envrionmentUsername}");
 			connectionstringParts.Add(string.IsNullOrEmpty(environmentPort)
 				? @"Port=3306"
 				: $"Port={environmentPort}");
 			connectionstringParts.Add(string.IsNullOrEmpty(environmentSslMode)
 				? @"SslMode=none"
 				: $"SslMode={environmentPort}");
-			if (!string.IsNullOrEmpty(environmentPassword)) connectionstringParts.Add($"Password={environmentPassword}");
+			if (!string.IsNullOrEmpty(environmentPassword)) connectionstringParts.Add($"Pwd={environmentPassword}");
 
 			return new MySqlConnectionString(string.Join(";", connectionstringParts));
 		}
