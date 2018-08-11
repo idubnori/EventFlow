@@ -52,6 +52,7 @@ namespace EventFlow.MySql.Tests.TestHelpers
 			var environmentPort = Environment.GetEnvironmentVariable("HELPZ_MYSQL_PORT", EnvironmentVariableTarget.Machine);
 			var environmentPassword = Environment.GetEnvironmentVariable("HELPZ_MYSQL_PASS");
 			var envrionmentUsername = Environment.GetEnvironmentVariable("HELPZ_MYSQL_USER", EnvironmentVariableTarget.Machine);
+			var environmentSslMode = Environment.GetEnvironmentVariable("HELPZ_MYSQL_SSLMODE", EnvironmentVariableTarget.Machine);
 
 			environmentServer = "localhost";
 			environmentPort = "3306";
@@ -66,6 +67,9 @@ namespace EventFlow.MySql.Tests.TestHelpers
 			connectionstringParts.Add(string.IsNullOrEmpty(environmentPort)
 				? @"Port=3306"
 				: $"Port={environmentPort}");
+			connectionstringParts.Add(string.IsNullOrEmpty(environmentSslMode)
+				? @"SslMode=none"
+				: $"SslMode={environmentPort}");
 			if (!string.IsNullOrEmpty(environmentPassword)) connectionstringParts.Add($"Password={environmentPassword}");
 
 			return new MySqlConnectionString(string.Join(";", connectionstringParts));
