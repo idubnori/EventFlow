@@ -45,7 +45,7 @@ namespace EventFlow.MySql.Tests.TestHelpers
 				var masterConnectionString = ConnectionString.NewConnectionString("mysql");
 				//masterConnectionString.Execute(
 				//	$"SELECT pid, pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '{ConnectionString.Database}';");
-				masterConnectionString.Execute($"DROP DATABASE \"{ConnectionString.Database}\";");
+				masterConnectionString.Execute($"DROP DATABASE `{ConnectionString.Database}`;");
 			}
 		}
 
