@@ -21,44 +21,14 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using System;
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using EventFlow.Aspnetcore.Middlewares;
-using EventFlow.AspNetCore.Extensions;
-using EventFlow.Autofac.Extensions;
-using EventFlow.Extensions;
+using EventFlow.AspNetCore.Tests.IntegrationTests.Site;
 using EventFlow.TestHelpers;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using NUnit.Framework;
 
-namespace EventFlow.AspNetCore.Tests.IntegrationTests.Site
+namespace EventFlow.AspNetCore.Tests.IntegrationTests.AutoFac
 {
-	public class Startup
+	[Category(Categories.Integration)]
+	public class AutoFacSiteTests : SiteTestsBase<Startup>
 	{
-		public IServiceProvider ConfigureServices(IServiceCollection services)
-		{
-			services.AddMvc();
-
-			var containerBuilder = new ContainerBuilder();
-
-			var container = EventFlowOptions.New
-				.UseAutofacContainerBuilder(containerBuilder)
-				.AddDefaults(EventFlowTestHelpers.Assembly)
-				.AddAspNetCoreMetadataProviders();
-
-
-			containerBuilder.Populate(services);
-
-			return new AutofacServiceProvider(containerBuilder.Build());
-		}
-
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-		{
-			app.UseMiddleware<CommandPublishMiddleware>();
-			app.UseMvcWithDefaultRoute();
-		}
 	}
 }

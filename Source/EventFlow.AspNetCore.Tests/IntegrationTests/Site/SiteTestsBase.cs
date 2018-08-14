@@ -36,8 +36,7 @@ using NUnit.Framework;
 
 namespace EventFlow.AspNetCore.Tests.IntegrationTests.Site
 {
-	[Category(Categories.Integration)]
-	public class SiteTests : Test
+	public abstract class SiteTestsBase<TStartup> : Test where TStartup : class 
 	{
 		private TestServer _server;
 		private HttpClient _client;
@@ -47,7 +46,7 @@ namespace EventFlow.AspNetCore.Tests.IntegrationTests.Site
 		public void SetUp()
 		{
 			_server = new TestServer(new WebHostBuilder()
-				.UseStartup<Startup>());
+				.UseStartup<TStartup>());
 			_client = _server.CreateClient();
 			_log = new ConsoleLog();
 		}
