@@ -31,6 +31,7 @@ using log4net;
 using log4net.Appender;
 using log4net.Core;
 using log4net.Repository.Hierarchy;
+using NLog.Targets;
 using NUnit.Framework;
 using Serilog;
 using Serilog.Core;
@@ -42,6 +43,36 @@ namespace EventFlow.Tests.IntegrationTests.Logs
 {
     public class LibLogTests : Test
     {
+        [Test]
+        public void NlogTest()
+        {
+            var memoryTarget = new MemoryTarget
+            {
+                Layout = "${level:uppercase=true}|${message}"
+            };
+            NLog.Config.SimpleConfigurator.ConfigureForTargetLogging(memoryTarget, NLog.LogLevel.Trace);
+
+            using (var resolver = EventFlowOptions.New
+                .UseLibLog(LibLogProviders.NLog)
+                .CreateResolver())
+            {
+                var log = resolver.Resolve<ILog>();
+                void TestLog(LogLevel logLevel, NLog.LogLevel level)
+                {
+                    var message = Guid.NewGuid().ToString("N");
+                    log.Write(logLevel, message);
+                    memoryTarget.Logs.Any(l => l.Contains(level.ToString().ToUpper()) && l.Contains(message)).Should().BeTrue();
+                }
+
+                TestLog(LogLevel.Verbose, NLog.LogLevel.Trace);
+                TestLog(LogLevel.Debug, NLog.LogLevel.Debug);
+                TestLog(LogLevel.Information, NLog.LogLevel.Info);
+                TestLog(LogLevel.Warning, NLog.LogLevel.Warn);
+                TestLog(LogLevel.Error, NLog.LogLevel.Error);
+                TestLog(LogLevel.Fatal, NLog.LogLevel.Fatal);
+            }
+        }
+
         [Test]
         public void Log4NetTest()
         {
