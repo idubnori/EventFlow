@@ -27,6 +27,10 @@ using System.Linq;
 using EventFlow.Extensions;
 using EventFlow.TestHelpers;
 using FluentAssertions;
+using log4net;
+using log4net.Appender;
+using log4net.Core;
+using log4net.Repository.Hierarchy;
 using NUnit.Framework;
 using Serilog;
 using Serilog.Core;
@@ -38,6 +42,37 @@ namespace EventFlow.Tests.IntegrationTests.Logs
 {
     public class LibLogTests : Test
     {
+        [Test]
+        public void Log4NetTest()
+        {
+            var hierarchy = (Hierarchy)LogManager.GetRepository();
+            var memoryAppender = new MemoryAppender();
+            memoryAppender.ActivateOptions();
+            hierarchy.Root.AddAppender(memoryAppender);
+            hierarchy.Root.Level = Level.All;
+            hierarchy.Configured = true;
+
+            using (var resolver = EventFlowOptions.New
+                .UseLibLog(LibLogProviders.Log4Net)
+                .CreateResolver())
+            {
+                var log = resolver.Resolve<ILog>();
+                void TestLog(LogLevel logLevel, Level level)
+                {
+                    var message = Guid.NewGuid().ToString("N");
+                    log.Write(logLevel, message);
+                    memoryAppender.GetEvents().Any(e => e.Level == level && e.RenderedMessage == message).Should().BeTrue();
+                }
+
+                TestLog(LogLevel.Verbose, Level.Debug);
+                TestLog(LogLevel.Debug, Level.Debug);
+                TestLog(LogLevel.Information, Level.Info);
+                TestLog(LogLevel.Warning, Level.Warn);
+                TestLog(LogLevel.Error, Level.Error);
+                TestLog(LogLevel.Fatal, Level.Fatal);
+            }
+        }
+
         [Test]
         public void SerilogTest()
         {
