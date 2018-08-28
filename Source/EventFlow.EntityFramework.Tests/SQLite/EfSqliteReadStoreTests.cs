@@ -39,7 +39,8 @@ namespace EventFlow.EntityFramework.Tests.SQLite
         protected override IRootResolver CreateRootResolver(IEventFlowOptions eventFlowOptions)
         {
             return eventFlowOptions
-                .ConfigureEntityFramework(EntityFrameworkConfiguration.New)
+                .ConfigureEntityFramework(EntityFrameworkConfiguration.New
+                    .UseUniqueConstraintDetectionStrategy<SqliteUniqueConstraintDetectionStrategy>())
                 .AddDbContextProvider<TestDbContext, SqliteDbContextProvider>(Lifetime.Singleton)
                 .ConfigureForReadStoreTest()
                 .CreateResolver();

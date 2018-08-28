@@ -21,26 +21,16 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using EventFlow.Configuration;
-using EventFlow.EntityFramework.Extensions;
-using EventFlow.EntityFramework.Tests.Model;
-using EventFlow.TestHelpers;
-using EventFlow.TestHelpers.Suites;
-using NUnit.Framework;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
-namespace EventFlow.EntityFramework.Tests.SQLite
+namespace EventFlow.EntityFramework.Tests.PostgreSql
 {
-    [Category(Categories.Integration)]
-    public class EfSqliteSnapshotTests : TestSuiteForSnapshotStore
+    public class PostgreSqlUniqueConstraintDetectionStrategy : IUniqueConstraintDetectionStrategy
     {
-        protected override IRootResolver CreateRootResolver(IEventFlowOptions eventFlowOptions)
+        public bool IsUniqueConstraintViolation(DbUpdateException exception)
         {
-            return eventFlowOptions
-                .ConfigureEntityFramework(EntityFrameworkConfiguration.New
-                    .UseUniqueConstraintDetectionStrategy<SqliteUniqueConstraintDetectionStrategy>())
-                .AddDbContextProvider<TestDbContext, SqliteDbContextProvider>(Lifetime.Singleton)
-                .ConfigureForSnapshotStoreTest()
-                .CreateResolver();
+            return (exception.InnerException as PostgresException)?.SqlState == "23505";
         }
     }
 }
