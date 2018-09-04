@@ -6,7 +6,7 @@ Function Get-Container-Ip($containername)
 # end functions
 
 # Up containers
-docker-compose -f docker-compose.ci.yml up -d
+docker-compose -f docker-compose.ci.yml up -d 2>&1 | %{ "$_" }
 
 # Set connection url to environment variable
 # RabbitMQ
