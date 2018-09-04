@@ -5,7 +5,14 @@ version: 0.65.{build}
 
 skip_tags: true
 
+cache:
+  - C:\ProgramData\chocolatey\bin -> appveyor.yml
+  - C:\ProgramData\chocolatey\lib -> appveyor.yml
+
 before_build:
+  - ps: |
+      cinst curl -y --no-progress
+      sal curl (Join-Path $env:ChocolateyInstall "bin\curl.exe") -O AllScope
   - ps: .\up_integration-test-env.ps1
 
 build_script:
