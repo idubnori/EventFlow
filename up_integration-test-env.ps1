@@ -20,10 +20,10 @@ $env:ELASTICSEARCH_URL = "http://${elasticsearch_ip}:9200"
 $eventstore_ip = Get-Container-Ip eventstore-ef
 $env:EVENTSTORE_URL = "tcp://admin:changeit@${eventstore_ip}:1113"
 
-# Check ready
+# Helth check
 # Event Store
-curl --connect-timeout 120 --retry 5 --retry-connrefused "http://${eventstore_ip}:2113" -sSL 2>&1 | %{ "$_" }
+curl --connect-timeout 60 --retry 5 "http://${eventstore_ip}:2113" -sSL 2>&1 | %{ "$_" }
 # Elasticsearch
-curl -sSL --connect-timeout 120 --retry 5 --retry-connrefused "http://${elasticsearch_ip}:9200" 2>&1 | %{ "$_" }
+curl --connect-timeout 60 --retry 5 "http://${elasticsearch_ip}:9200" -sSL 2>&1 | %{ "$_" }
 # RabbitMQ
-curl --connect-timeout 120 --retry 5 --retry-connrefused "http://${rabbitmq_ip}:15672" -sSL 2>&1 | %{ "$_" }
+curl --connect-timeout 60 --retry 5 "http://${rabbitmq_ip}:15672" -sSL 2>&1 | %{ "$_" }
