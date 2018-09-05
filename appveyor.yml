@@ -12,8 +12,7 @@ cache:
 before_build:
   - ps: |
       cinst wget -y --no-progress
-      sal wget (Join-Path $env:ChocolateyInstall "bin\wget.exe") -O AllScope
-  - ps: .\up_integration-test-env.ps1
+  - cmd: powershell -NoProfile -ExecutionPolicy unrestricted -Command .\up_integration-test-env.ps1
 
 build_script:
   - cmd: powershell -NoProfile -ExecutionPolicy unrestricted -Command .\build.ps1 -Target "All"

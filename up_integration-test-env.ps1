@@ -5,6 +5,9 @@ Function Get-Container-Ip($containername)
 }
 # end functions
 
+sal wget (Join-Path $env:ChocolateyInstall "bin\wget.exe") -O AllScope
+wget --timeout=60 --tries=5 --spider -r "http://google.com"
+
 # Up containers
 docker-compose -f docker-compose.ci.yml pull --parallel 2>&1 | %{ "$_" }
 docker-compose -f docker-compose.ci.yml up -d 2>&1 | %{ "$_" }
@@ -22,8 +25,8 @@ $env:EVENTSTORE_URL = "tcp://admin:changeit@${eventstore_ip}:1113"
 
 # Helth check
 # Event Store
-wget --timeout=60 --tries=5 --spider "http://${eventstore_ip}:2113"
+wget --timeout=60 --tries=5 --spider -r "http://${eventstore_ip}:2113"
 # Elasticsearch
-wget --timeout=60 --tries=5 --spider "http://${elasticsearch_ip}:9200"
+wget --timeout=60 --tries=5 --spider -r "http://${elasticsearch_ip}:9200"
 # RabbitMQ
-wget --timeout=60 --tries=5 --spider "http://${rabbitmq_ip}:15672"
+wget --timeout=60 --tries=5 --spider -r "http://${rabbitmq_ip}:15672"
