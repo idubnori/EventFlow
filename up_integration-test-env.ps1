@@ -22,8 +22,8 @@ $env:EVENTSTORE_URL = "tcp://admin:changeit@${eventstore_ip}:1113"
 
 # Check ready
 # Event Store
-curl "http://${eventstore_ip}:2113" -sSL --connect-timeout 120
+curl --connect-timeout 120 --retry 5 "http://${eventstore_ip}:2113" -sSL
 # Elasticsearch
-curl "http://${elasticsearch_ip}:9200" -sSL --connect-timeout 120
+curl -sSL --connect-timeout 120 --retry 5 "http://${elasticsearch_ip}:9200"
 # RabbitMQ
-curl "http://${rabbitmq_ip}:15672" -sSL --connect-timeout 120
+curl --connect-timeout 120 --retry 5 "http://${rabbitmq_ip}:15672" -sSL
