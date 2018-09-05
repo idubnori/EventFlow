@@ -22,8 +22,8 @@ $env:EVENTSTORE_URL = "tcp://admin:changeit@${eventstore_ip}:1113"
 
 # Helth check
 # Event Store
-curl --connect-timeout 60 --retry 5 "http://${eventstore_ip}:2113" -sSL 2>&1 | %{ "$_" }
+wget --timeout=60 --tries=5 --spider "http://${eventstore_ip}:2113"
 # Elasticsearch
-curl --connect-timeout 60 --retry 5 "http://${elasticsearch_ip}:9200" -sSL 2>&1 | %{ "$_" }
+wget --timeout=60 --tries=5 --spider "http://${elasticsearch_ip}:9200"
 # RabbitMQ
-curl --connect-timeout 60 --retry 5 "http://${rabbitmq_ip}:15672" -sSL 2>&1 | %{ "$_" }
+wget --timeout=60 --tries=5 --spider "http://${rabbitmq_ip}:15672"

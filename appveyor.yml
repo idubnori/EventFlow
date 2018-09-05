@@ -11,8 +11,8 @@ cache:
 
 before_build:
   - ps: |
-      cinst curl -y --no-progress
-      sal curl (Join-Path $env:ChocolateyInstall "bin\curl.exe") -O AllScope
+      cinst wget -y --no-progress
+      sal wget (Join-Path $env:ChocolateyInstall "bin\wget.exe") -O AllScope
   - ps: .\up_integration-test-env.ps1
 
 build_script:
