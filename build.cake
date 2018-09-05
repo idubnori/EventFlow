@@ -28,8 +28,6 @@
 #tool "nuget:?package=NUnit.ConsoleRunner"
 #tool "nuget:?package=OpenCover"
 
-#addin "Cake.Docker"
-
 using System.IO.Compression;
 using System.Net;
 using System.Xml;
@@ -110,7 +108,6 @@ Task("Test")
         {
             UploadArtifact(FILE_NUNIT_TXT_REPORT);
             UploadTestResults(FILE_NUNIT_XML_REPORT);
-			DockerComposeStop("-f", "docker-compose.ci.yml");
         });
 
 // =====================================================================================================
