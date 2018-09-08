@@ -9,6 +9,10 @@ Function Get-Container-Ip($containername)
 docker-compose -f docker-compose.ci.yml pull --parallel
 docker-compose -f docker-compose.ci.yml up -d
 
+# Install wget
+cinst wget -y --no-progress
+sal wget (Join-Path $env:ChocolateyInstall "bin\wget.exe") -O AllScope
+
 # Set connection url to environment variable
 # RabbitMQ
 $rabbitmq_ip = Get-Container-Ip rabbitmq-ef
@@ -19,10 +23,6 @@ $env:ELASTICSEARCH_URL = "http://${elasticsearch_ip}:9200"
 # Event Store
 $eventstore_ip = Get-Container-Ip eventstore-ef
 $env:EVENTSTORE_URL = "tcp://admin:changeit@${eventstore_ip}:1113"
-
-# Install wget
-cinst wget -y --no-progress
-sal wget (Join-Path $env:ChocolateyInstall "bin\wget.exe") -O AllScope
 
 # Helth check
 # Event Store
