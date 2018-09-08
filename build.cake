@@ -137,7 +137,6 @@ Task("Package")
 						Configuration = CONFIGURATION,
 						OutputDirectory = DIR_OUTPUT_PACKAGES,
 						NoBuild = true,
-                        Verbosity = DotNetCoreVerbosity.Detailed,
 						ArgumentCustomization = aggs => aggs.Append(GetDotNetCoreArgsVersions())
 					});
 			}
