@@ -9,9 +9,9 @@ Function Get-Container-Ip($containername)
 docker-compose -f docker-compose.ci.yml pull --parallel
 docker-compose -f docker-compose.ci.yml up -d
 
-# Install wget
-cinst wget -y --no-progress
-sal wget (Join-Path $env:ChocolateyInstall "bin\wget.exe") -O AllScope
+# Install curl
+cinst curl -y --no-progress
+sal curl (Join-Path $env:ChocolateyInstall "bin\curl.exe") -O AllScope
 
 # Set connection url to environment variable
 # RabbitMQ
@@ -26,8 +26,8 @@ $env:EVENTSTORE_URL = "tcp://admin:changeit@${eventstore_ip}:1113"
 
 # Helth check
 # Event Store
-wget --timeout=60 --tries=5 -O - "http://${eventstore_ip}:2113"
+curl --connect-timeout 60 --retry 5 -sL "http://${eventstore_ip}:2113"
 # Elasticsearch
-wget --timeout=60 --tries=5 -O - "http://${elasticsearch_ip}:9200"
+curl --connect-timeout 60 --retry 5 -sL "http://${elasticsearch_ip}:9200"
 # RabbitMQ
-wget --timeout=60 --tries=5 -O - "http://${rabbitmq_ip}:15672"
+curl --connect-timeout 60 --retry 5 -sL "http://${rabbitmq_ip}:15672"
