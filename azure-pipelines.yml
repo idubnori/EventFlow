@@ -13,8 +13,9 @@ variables:
 
 steps:
 - powershell: |
-            .\up_integration-test-env.ps1;
-            .\build.ps1 -Target All;
+            docker run ubuntu
+            # .\up_integration-test-env.ps1;
+            # .\build.ps1 -Target All;
   displayName: Cake Build
 
 # - script: |
