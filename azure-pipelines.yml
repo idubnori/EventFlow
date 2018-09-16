@@ -12,9 +12,14 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: |
-        powershell -NoProfile -ExecutionPolicy unrestricted -Command ".\up_integration-test-env.ps1; .\build.ps1 -Target All;"
-  displayName: Cake build
+- powershell: |
+            .\up_integration-test-env.ps1;
+            .\build.ps1 -Target All;
+  displayName: Cake Build
+
+# - script: |
+#         powershell -NoProfile -ExecutionPolicy unrestricted -Command ".\up_integration-test-env.ps1; .\build.ps1 -Target All;"
+#   displayName: Cake build
 
 # - task: NuGetToolInstaller@0
 
