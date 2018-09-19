@@ -36,7 +36,7 @@ using EventFlow.TestHelpers.MsSql;
 using EventFlow.TestHelpers.Suites;
 using FluentAssertions;
 using Hangfire.SqlServer;
-using Microsoft.Owin.Hosting;
+//using Microsoft.Owin.Hosting;
 
 namespace EventFlow.Hangfire.Tests.Integration
 {
@@ -66,7 +66,8 @@ namespace EventFlow.Hangfire.Tests.Integration
                 .UseSqlServerStorage(_msSqlDatabase.ConnectionString.Value, sqlServerStorageOptions)
                 .UseActivator(new DelegatingActivator(() => _eventFlowResolverActivator));
 
-            _webApp = WebApp.Start("http://127.0.0.1:9001", app => app.UseHangfireDashboard());
+            //_webApp = WebApp.Start("http://127.0.0.1:9001", app => app.UseHangfireDashboard());
+            _webApp = _msSqlDatabase; // TODO idubnori
             _backgroundJobServer = new BackgroundJobServer(backgroundJobServerOptions);
         }
 

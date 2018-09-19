@@ -34,7 +34,8 @@ using NUnit.Framework;
 
 namespace EventFlow.Tests.IntegrationTests.Sagas
 {
-    [Category(Categories.Integration), Timeout(20000)]
+    [Category(Categories.Integration)]
+    //[Timeout(20000)]
     public class AlternativeSagaStoreTests
     {
         private IRootResolver _resolver;
@@ -115,7 +116,7 @@ namespace EventFlow.Tests.IntegrationTests.Sagas
             Action action = () => _commandBus.Publish(new AlternativeSagaStoreTestClasses.SagaTestBCommand(aggregateId), CancellationToken.None);
             
             // Assert
-            action.ShouldNotThrow();
+            action.Should().NotThrow();
         }
 
         [Test]

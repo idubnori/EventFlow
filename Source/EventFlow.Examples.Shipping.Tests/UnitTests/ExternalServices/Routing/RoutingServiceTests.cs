@@ -25,6 +25,7 @@ using EventFlow.Examples.Shipping.Domain.Model.CargoModel.ValueObjects;
 using EventFlow.Examples.Shipping.Domain.Model.VoyageModel;
 using EventFlow.Examples.Shipping.ExternalServices.Routing;
 using EventFlow.TestHelpers;
+using FluentAssertions.Extensions;
 using FluentAssertions;
 using NUnit.Framework;
 

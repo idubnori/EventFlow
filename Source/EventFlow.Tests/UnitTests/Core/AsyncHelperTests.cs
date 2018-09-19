@@ -25,7 +25,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Threading;
+//using System.Windows.Threading;
 using EventFlow.Core;
 using EventFlow.TestHelpers;
 using FluentAssertions;
@@ -45,23 +45,23 @@ namespace EventFlow.Tests.UnitTests.Core
             }
         }
 
-        [Test, Description("Have a look at ReferenceDeadlockImplementation1 and ReferenceDeadlockImplementation2")]
-        public void DoesNotDeadlock()
-        {
-            // Arrange
-            SynchronizationContext.SetSynchronizationContext(new DispatcherSynchronizationContext());
-            string result = null;
+        //[Test, Description("Have a look at ReferenceDeadlockImplementation1 and ReferenceDeadlockImplementation2")]
+        //public void DoesNotDeadlock()
+        //{
+        //    // Arrange
+        //    SynchronizationContext.SetSynchronizationContext(new DispatcherSynchronizationContext());
+        //    string result = null;
 
-            // Act
-            using (var a = AsyncHelper.Wait)
-            {
-                a.Run(PotentialDeadlockAsync("no deadlock"), r => result = r);
-            }
+        //    // Act
+        //    using (var a = AsyncHelper.Wait)
+        //    {
+        //        a.Run(PotentialDeadlockAsync("no deadlock"), r => result = r);
+        //    }
 
-            // Assert
-            // Expected to actually finish
-            result.Should().Be("no deadlock");
-        }
+        //    // Assert
+        //    // Expected to actually finish
+        //    result.Should().Be("no deadlock");
+        //}
 
         [Test]
         public void ThrowsAggregateExceptionForTwoExceptions()
@@ -140,35 +140,35 @@ namespace EventFlow.Tests.UnitTests.Core
             levelsWereExecuted.All(b => b).Should().BeTrue();
         }
 
-        [Test, Explicit("For reference: Will deadlock!")]
-        public void ReferenceDeadlockImplementation1()
-        {
-            // Arrange
-            var synchronizationContext = new DispatcherSynchronizationContext();
-            SynchronizationContext.SetSynchronizationContext(synchronizationContext);
+        //[Test, Explicit("For reference: Will deadlock!")]
+        //public void ReferenceDeadlockImplementation1()
+        //{
+        //    // Arrange
+        //    var synchronizationContext = new DispatcherSynchronizationContext();
+        //    SynchronizationContext.SetSynchronizationContext(synchronizationContext);
 
-            // Act
-            var result = PotentialDeadlockAsync("deadlock").Result;
+        //    // Act
+        //    var result = PotentialDeadlockAsync("deadlock").Result;
 
-            // Assert
-            // Will NOT be thrown
-            throw new Exception(result);
-        }
+        //    // Assert
+        //    // Will NOT be thrown
+        //    throw new Exception(result);
+        //}
 
-        [Test, Explicit("For reference: Will deadlock!")]
-        public void ReferenceDeadlockImplementation2()
-        {
-            // Arrange
-            var synchronizationContext = new DispatcherSynchronizationContext();
-            SynchronizationContext.SetSynchronizationContext(synchronizationContext);
+        //[Test, Explicit("For reference: Will deadlock!")]
+        //public void ReferenceDeadlockImplementation2()
+        //{
+        //    // Arrange
+        //    var synchronizationContext = new DispatcherSynchronizationContext();
+        //    SynchronizationContext.SetSynchronizationContext(synchronizationContext);
 
-            // Act
-            var result = PotentialDeadlockAsync("deadlock").GetAwaiter().GetResult();
+        //    // Act
+        //    var result = PotentialDeadlockAsync("deadlock").GetAwaiter().GetResult();
 
-            // Assert
-            // Will NOT be thrown
-            throw new Exception(result);
-        }
+        //    // Assert
+        //    // Will NOT be thrown
+        //    throw new Exception(result);
+        //}
 
         private static async Task ThrowsTestExceptionAsync()
         {

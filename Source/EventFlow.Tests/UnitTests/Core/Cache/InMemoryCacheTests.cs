@@ -28,8 +28,10 @@ using NUnit.Framework;
 
 namespace EventFlow.Tests.UnitTests.Core.Cache
 {
+#if NET461
     [Category(Categories.Unit)]
     public class InMemoryCacheTests : TestSuiteForInMemoryCache<MemoryCache>
     {
     }
+#endif
 }

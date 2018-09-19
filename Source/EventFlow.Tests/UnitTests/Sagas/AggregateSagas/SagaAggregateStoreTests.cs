@@ -50,7 +50,7 @@ namespace EventFlow.Tests.UnitTests.Sagas.AggregateSagas
             _thingySagaId = A<ThingySagaId>();
             _thingySaga = InjectMock<ThingySaga>(_thingySagaId);
 
-            Inject<IMemoryCache>(A<MemoryCache>());
+            Inject<IMemoryCache>(A<DictionaryMemoryCache>());
         }
 
         [Test]

@@ -34,7 +34,7 @@ using NUnit.Framework;
 
 namespace EventFlow.Tests.UnitTests.Commands
 {
-    [Timeout(10000)]
+    //[Timeout(10000)]
     [Category(Categories.Unit)]
     public class DistinctCommandTests
     {

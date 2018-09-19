@@ -23,7 +23,7 @@
 
 using System;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace EventFlow.TestHelpers
 {

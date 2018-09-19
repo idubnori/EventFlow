@@ -35,7 +35,7 @@ using NUnit.Framework;
 namespace EventFlow.EventStores.EventStore.Tests.IntegrationTests
 {
     [TestFixture]
-    [Timeout(30000)]
+    //[Timeout(30000)]
     [Category(Categories.Integration)]
     public class EventStoreEventStoreTests : TestSuiteForEventStore
     {

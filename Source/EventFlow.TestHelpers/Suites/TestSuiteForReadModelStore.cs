@@ -37,7 +37,7 @@ using EventFlow.TestHelpers.Aggregates.ValueObjects;
 using EventFlow.TestHelpers.Extensions;
 using FluentAssertions;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace EventFlow.TestHelpers.Suites
 {
@@ -113,7 +113,7 @@ namespace EventFlow.TestHelpers.Suites
 
             // Assert
             returnedThingyMessages.Should().HaveCount(thingyMessages.Count);
-            returnedThingyMessages.ShouldAllBeEquivalentTo(thingyMessages);
+            returnedThingyMessages.Should().AllBeEquivalentTo(thingyMessages);
         }
 
         [Test]
@@ -135,7 +135,7 @@ namespace EventFlow.TestHelpers.Suites
 
             // Assert
             thingy.PingsReceived.Should().Be(pingIds.Count);
-            returnedThingyMessages.ShouldAllBeEquivalentTo(returnedThingyMessages);
+            returnedThingyMessages.Should().AllBeEquivalentTo(returnedThingyMessages);
         }
 
         [Test]
@@ -239,7 +239,8 @@ namespace EventFlow.TestHelpers.Suites
             }
         }
 
-        [Test, Timeout(10000)]
+        [Test]
+        //[Timeout(10000)]
         public virtual async Task OptimisticConcurrencyCheck()
         {
             // Simulates a state in which two read models have been loaded to memory
@@ -306,7 +307,7 @@ namespace EventFlow.TestHelpers.Suites
 
             // Assert
             returnedThingyMessages.Should().HaveCount(thingyMessages.Count);
-            returnedThingyMessages.ShouldAllBeEquivalentTo(thingyMessages);
+            returnedThingyMessages.Should().AllBeEquivalentTo(thingyMessages);
         }
 
         private class WaitState
