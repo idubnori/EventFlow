@@ -1,40 +1,16 @@
-# .NET Desktop
-# Build and run tests for .NET Desktop or Windows classic desktop solutions.
-# Add steps that publish symbols, save build artifacts, and more:
-# https://docs.microsoft.com/vsts/pipelines/apps/windows/dot-net
-
-pool:
-  vmImage: 'VS2017-Win2016'
-
-variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
-
-steps:
-- powershell: |
-            docker run ubuntu
-            # .\up_integration-test-env.ps1;
-            # .\build.ps1 -Target All;
-  displayName: Cake Build
-
-# - script: |
-#         powershell -NoProfile -ExecutionPolicy unrestricted -Command ".\up_integration-test-env.ps1; .\build.ps1 -Target All;"
-#   displayName: Cake build
-
-# - task: NuGetToolInstaller@0
-
-# - task: NuGetCommand@2
-#   inputs:
-#     restoreSolution: '$(solution)'
-
-# - task: VSBuild@1
-#   inputs:
-#     solution: '$(solution)'
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
-
-# - task: VSTest@2
-#   inputs:
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
+resources:
+  containers:
+  - container: dev1
+    image: elasticsearch:5.6.11-alpine
+    options: --hostname es-test
+jobs:
+- job: job_container
+  pool:
+    vmImage: ubuntu-16.04
+  steps:
+  - script: |
+          docker run -d -p 9200:9200 -p 9300:9300 --name es elasticsearch:5.6.11-alpine
+  - script: |
+          ifconfig
+          sleep 15
+          curl http://localhost:9200 --connect-timeout 60 --retry 5 -sL
