@@ -14,3 +14,21 @@ jobs:
           ifconfig
           sleep 15
           curl http://localhost:9200 --connect-timeout 60 --retry 5 -sL
+          sleep 180
+
+- job: job_build
+  pool:
+    vmImage: vs2017-win2016
+  steps:
+  - powershell: |
+          ipconfig
+
+          cinst curl -y --no-progress
+          sal curl (Join-Path $env:ChocolateyInstall "bin\curl.exe") -O AllScope
+
+          curl --connect-timeout 30 --retry 5 "http://10.1.0.4:9200"
+          curl --connect-timeout 30 --retry 5 "http://172.17.0.2:9200"
+          Start-Sleep -s 60
+          curl --connect-timeout 30 --retry 5 "http://172.17.0.2:9200"
+          curl --connect-timeout 30 --retry 5 "http://10.1.0.4:9200"
+
