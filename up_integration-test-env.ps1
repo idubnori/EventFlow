@@ -5,6 +5,9 @@ Function Get-Container-Ip($containername)
 }
 # end functions
 
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+choco install wsl-ubuntu-1604
+
 # Up containers
 docker-compose -f docker-compose.ci.yml pull --parallel
 docker-compose -f docker-compose.ci.yml up -d
