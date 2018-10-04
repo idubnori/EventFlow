@@ -20,7 +20,7 @@ artifacts:
 
 services:
   - mssql2014
-  - postgresql101
+  - postgresql96
 
 on_success:
 - choco install codecov
