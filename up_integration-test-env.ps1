@@ -5,9 +5,13 @@ Function Get-Container-Ip($containername)
 }
 # end functions
 
+New-Item ${localappdata}\CosmosDBEmulatorCert -ItemType Directory
+
 # Up containers
 docker-compose -f docker-compose.ci.yml pull --parallel
 docker-compose -f docker-compose.ci.yml up -d
+
+%LOCALAPPDATA%\CosmosDBEmulatorCert\importcert.ps1
 
 # Install curl
 cinst curl -y --no-progress
