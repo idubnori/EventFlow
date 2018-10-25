@@ -17,7 +17,7 @@ services:
     image: microsoft/azure-cosmosdb-emulator
     container_name: cosmosdb-ef
     volumes:
-      - ${localappdata}\CosmosDBEmulatorCert:c:/CosmosDBEmulator/CosmosDBEmulatorCert
+      - c:\CosmosDBEmulatorCert:c:/CosmosDBEmulator/CosmosDBEmulatorCert
 
 networks:
   default:
