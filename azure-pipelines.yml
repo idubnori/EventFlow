@@ -24,6 +24,18 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+- task: CopyFiles@2
+  displayName: 'Functional tests to: ArtifactStagingDirectory'
+  inputs:
+    targetPath: Source
+    Contents: '**/*.Tests/bin/**/*'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/tests'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: ArtifactStagingDirectory'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+
 # - task: VSTest@2
 #   inputs:
 #     platform: '$(buildPlatform)'
