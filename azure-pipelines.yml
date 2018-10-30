@@ -37,7 +37,8 @@ jobs:
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: ArtifactStagingDirectory'
     inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        artifactName: 'tests'
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/tests'
 
   # - task: VSTest@2
   #   inputs:
@@ -50,11 +51,20 @@ jobs:
     vmImage: 'VS2017-Win2016'
   steps:
   - checkout: none
-  - task: DownloadPipelineArtifact@0
-    displayName: 'Download Pipeline Artifact'
+
+  - task: DownloadBuildArtifacts@0
+    displayName: 'Download tests Artifacts'
     inputs:
-      artifactName: drop
-      targetPath: '$(Build.SourcesDirectory)'
+      artifactName: 'tests'
+      downloadPath: '$(System.DefaultWorkingDirectory)/tests/'
+
+  - task: VSTest@2
+    displayName: 'VsTest - testAssemblies'
+    inputs:
+      testAssemblyVer2: '**\*Tests.dll'
+      runOnlyImpactedTests: false
+      runInParallel: true
+      codeCoverageEnabled: true
 
   dependsOn: Build
   condition: succeeded()
