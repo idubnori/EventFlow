@@ -16,5 +16,6 @@ jobs:
 
   steps:
   - powershell: |
+      .\up_integration-test-env.ps1;
       .\build.ps1 -Target All;
     displayName: 'PowerShell Script'
