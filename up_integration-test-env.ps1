@@ -8,6 +8,7 @@ Function Get-Container-Ip($containername)
 Switch-DockerLinux
 
 # Up containers
+# docker network create nat
 docker-compose -f docker-compose.ci.yml pull --parallel
 docker-compose -f docker-compose.ci.yml up -d
 
