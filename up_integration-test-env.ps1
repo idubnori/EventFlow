@@ -1,9 +1,11 @@
 # functions
 Function Get-Container-Ip($containername)
 {
-	docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" $containername
+	docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $containername
 }
 # end functions
+
+Switch-DockerLinux
 
 # Up containers
 docker-compose -f docker-compose.ci.yml pull --parallel
