@@ -20,13 +20,13 @@ docker ps -a
 
 # Set connection url to environment variable
 # RabbitMQ
-$rabbitmq_ip = Get-Container-Ip rabbitmq-ef
-$env:RABBITMQ_URL = "amqp://guest:guest@${rabbitmq_ip}:5672"
+$rabbitmq_ip = "rabbitmq-ef" # Get-Container-Ip rabbitmq-ef
+$env:RABBITMQ_URL = "amqp://guest:guest@${rabbitmq_ip}-ef:5672"
 # Elasticsearch
-$elasticsearch_ip = Get-Container-Ip elasticsearch-ef
+$elasticsearch_ip = "elasticsearch-ef" # Get-Container-Ip elasticsearch-ef
 $env:ELASTICSEARCH_URL = "http://${elasticsearch_ip}:9200"
 # Event Store
-$eventstore_ip = Get-Container-Ip eventstore-ef
+$eventstore_ip = "eventstore-ef" # Get-Container-Ip eventstore-ef
 $env:EVENTSTORE_URL = "tcp://admin:changeit@${eventstore_ip}:1113"
 
 # Helth check
