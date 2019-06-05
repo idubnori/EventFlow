@@ -16,6 +16,8 @@ docker-compose -f docker-compose.ci.yml up -d
 cinst curl -y --no-progress
 sal curl (Join-Path $env:ChocolateyInstall "bin\curl.exe") -O AllScope
 
+docker ps -a
+
 # Set connection url to environment variable
 # RabbitMQ
 $rabbitmq_ip = Get-Container-Ip rabbitmq-ef
